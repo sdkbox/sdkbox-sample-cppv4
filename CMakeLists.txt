@@ -65,6 +65,8 @@ list(APPEND GAME_HEADER
      )
 
 if(ANDROID)
+    add_definitions(-DSDKBOX_ENABLED)
+
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
     list(APPEND GAME_SOURCE
@@ -156,4 +158,12 @@ endif()
 if(LINUX OR WINDOWS)
     cocos_get_resource_path(APP_RES_DIR ${APP_NAME})
     cocos_copy_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
+endif()
+
+if(ANDROID)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android/app/jni/PluginAdMob)
+    target_link_libraries(${APP_NAME} ext_PluginAdMob)
+
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android/app/jni/sdkbox)
+    target_link_libraries(${APP_NAME} ext_sdkbox)
 endif()

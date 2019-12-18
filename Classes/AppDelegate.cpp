@@ -24,6 +24,7 @@
 
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "PluginAdMob/PluginAdMob.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -104,6 +105,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {        
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
     }
+
+    sdkbox::PluginAdMob::init();
 
     register_all_packages();
 

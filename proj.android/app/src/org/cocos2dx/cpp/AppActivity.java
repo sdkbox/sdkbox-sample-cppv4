@@ -30,7 +30,8 @@ import android.os.Build;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-public class AppActivity extends Cocos2dxActivity {
+//public class AppActivity extends Cocos2dxActivity {
+public class AppActivity extends com.sdkbox.plugin.SDKBoxActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
