@@ -137,6 +137,18 @@ target_include_directories(${APP_NAME}
 
 # mark app resources
 setup_cocos_app_config(${APP_NAME})
+# PluginSdkboxPlay
+if(ANDROID)
+    add_definitions(-DSDKBOX_ENABLED)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android/app/jni/PluginSdkboxPlay/)
+    target_link_libraries(${APP_NAME} ext_PluginSdkboxPlay)
+endif()
+# sdkbox
+if(ANDROID)
+    add_definitions(-DSDKBOX_ENABLED)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android/app/jni/sdkbox/)
+    target_link_libraries(${APP_NAME} ext_sdkbox)
+endif()
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
 

@@ -56,28 +56,28 @@ bool HelloWorld::init()
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    // auto closeItem = MenuItemImage::create(
+    //                                        "CloseNormal.png",
+    //                                        "CloseSelected.png",
+    //                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
-    if (closeItem == nullptr ||
-        closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
-    {
-        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
-        closeItem->setPosition(Vec2(x,y));
-    }
+    // if (closeItem == nullptr ||
+    //     closeItem->getContentSize().width <= 0 ||
+    //     closeItem->getContentSize().height <= 0)
+    // {
+    //     problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
+    // }
+    // else
+    // {
+    //     float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
+    //     float y = origin.y + closeItem->getContentSize().height/2;
+    //     closeItem->setPosition(Vec2(x,y));
+    // }
 
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
+    // auto menu = Menu::create(closeItem, NULL);
+    // menu->setPosition(Vec2::ZERO);
+    // this->addChild(menu, 1);
 
     /////////////////////////////
     // 3. add your codes below...
@@ -85,35 +85,49 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
+    Menu* menu = Menu::create(
+        MenuItemFont::create("Connect", [](Ref*) { sdkbox::PluginSdkboxPlay::signin(); }),
+        MenuItemFont::create("Disconnect", [](Ref*) { sdkbox::PluginSdkboxPlay::signout(); }),
+        NULL
+    );
 
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
+    menu->alignItemsVerticallyWithPadding(5);
+    menu->setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
+    addChild(menu);
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    // auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    // if (label == nullptr)
+    // {
+    //     problemLoading("'fonts/Marker Felt.ttf'");
+    // }
+    // else
+    // {
+    //     // position the label on the center of the screen
+    //     label->setPosition(Vec2(origin.x + visibleSize.width/2,
+    //                             origin.y + visibleSize.height - label->getContentSize().height));
 
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
+    //     // add the label as a child to this layer
+    //     this->addChild(label, 1);
+    // }
+
+    // // add "HelloWorld" splash screen"
+    // auto sprite = Sprite::create("HelloWorld.png");
+    // if (sprite == nullptr)
+    // {
+    //     problemLoading("'HelloWorld.png'");
+    // }
+    // else
+    // {
+    //     // position the sprite on the center of the screen
+    //     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+
+    //     // add the sprite as a child to this layer
+    //     this->addChild(sprite, 0);
+    // }
+
+    sdkbox::PluginSdkboxPlay::setListener(this);
+    sdkbox::PluginSdkboxPlay::init();
+
     return true;
 }
 
@@ -130,3 +144,86 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 
 }
+
+
+void HelloWorld::onConnectionStatusChanged(int connection_status) {    
+}
+
+void HelloWorld::onScoreSubmitted( const std::string& leaderboard_name, long score, bool maxScoreAllTime, bool maxScoreWeek, bool maxScoreToday ) {    
+}
+
+void HelloWorld::onIncrementalAchievementUnlocked( const std::string& achievement_name ) {    
+}
+
+void HelloWorld::onIncrementalAchievementStep( const std::string& achievement_name, double step ) {    
+}
+
+void HelloWorld::onIncrementalAchievementStepError( const std::string& name, double steps, int error_code, const std::string& error_description ) {    
+}
+
+void HelloWorld::onAchievementUnlocked( const std::string& achievement_name, bool newlyUnlocked ) {    
+}
+
+void HelloWorld::onAchievementUnlockError( const std::string& achievement_name, int error_code, const std::string& error_description ) {    
+}
+
+void HelloWorld::onAchievementsLoaded( bool reload_forced, const std::string& json_achievements_info ) {    
+}
+
+void HelloWorld::onSetSteps( const std::string& name, double steps ) {    
+}
+
+void HelloWorld::onSetStepsError( const std::string& name, double steps, int error_code, const std::string& error_description ) {    
+}
+
+void HelloWorld::onReveal( const std::string& name) {    
+}
+
+void HelloWorld::onRevealError( const std::string& name, int error_code, const std::string& error_description ) {    
+}
+
+void HelloWorld::onMyScore( const std::string& leaderboard_name, int time_span, int collection_type, long score ) {    
+}
+
+void HelloWorld::onMyScoreError( const std::string& leaderboard_name, int time_span, int collection_type, int error_code, const std::string& error_description) {    
+}
+
+void HelloWorld::onPlayerCenteredScores( const std::string& leaderboard_name,
+                                    int time_span,
+                                    int collection_type,
+                                    const std::string& json_with_score_entries ) {
+                                    }
+
+void HelloWorld::onPlayerCenteredScoresError( const std::string& leaderboard_name,
+                                            int time_span,
+                                            int collection_type,
+                                            int error_code,
+                                            const std::string& error_description) {                                                
+                                            }
+
+void HelloWorld::onPlayerScores(const std::string& leaderboard_name,
+                            int time_span,
+                            int collection_type,
+                            const std::string& json_with_score_entries ) {
+                            }
+
+void HelloWorld::onPlayerScoresError(const std::string& leaderboard_name,
+                                    int time_span,
+                                    int collection_type,
+                                    int error_code,
+                                    const std::string& error_description) {                                        
+                                    }
+
+
+void HelloWorld::onGameData(const std::string& action, const std::string& name, const std::string& data, const std::string& error) {    
+}
+
+void HelloWorld::onSaveGameData(bool success, const std::string& error) {    
+}
+
+void HelloWorld::onLoadGameData(const sdkbox::SavedGameData* savedData, const std::string& error) {    
+}
+
+void HelloWorld::onGameDataNames(const std::vector<std::string>& names, const std::string& error) {    
+}
+
